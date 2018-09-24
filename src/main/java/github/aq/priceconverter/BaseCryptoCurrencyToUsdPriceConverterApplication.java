@@ -1,4 +1,4 @@
-package com.example.demo;
+package github.aq.priceconverter;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
