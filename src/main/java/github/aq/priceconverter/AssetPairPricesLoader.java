@@ -27,6 +27,7 @@ public class AssetPairPricesLoader {
 
             case BTCUSD:
                 return load(AssetPair.BTCUSD, "src/main/resources/BCHARTS-KRAKENUSD.csv");
+
             default:
                 return null;
         }

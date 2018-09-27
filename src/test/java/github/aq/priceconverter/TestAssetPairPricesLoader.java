@@ -9,6 +9,9 @@ import java.util.Map;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.io.IOException;
+import java.util.List;
+
 public class TestAssetPairPricesLoader {
 
     @Before
@@ -21,6 +24,7 @@ public class TestAssetPairPricesLoader {
         try {
             Map<LocalDate, AssetPairPrice> map = loader.load(AssetPair.ETHUSD, "src/test/resources/BITFINEX-ETHUSD.csv");
             assertTrue(map.size() >0);
+
         } catch(IOException exc) {
             System.out.println(exc.getMessage());
         }
@@ -34,6 +38,7 @@ public class TestAssetPairPricesLoader {
             assertTrue(map.size() >0);
             System.out.println("test");
             AssetPairPrice app = (AssetPairPrice) map.get(0);
+
             System.out.println(app.getDate() + " " + app.getLast());
         } catch(IOException exc) {
             System.out.println(exc.getMessage());
