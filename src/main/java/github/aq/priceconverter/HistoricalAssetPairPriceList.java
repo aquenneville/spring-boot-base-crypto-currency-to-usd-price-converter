@@ -1,21 +1,25 @@
 package github.aq.priceconverter;
 
-import java.util.List;
+import java.time.LocalDate;
+import java.util.Map;
 
 public class HistoricalAssetPairPriceList {
     
-    List<AssetPairPrice> assetPairPriceList;
+    Map<LocalDate, AssetPairPrice> assetPairPriceList;
     AssetPair assetPair;
     
-    public List<AssetPairPrice> getAssetPairPriceList() {
+    public Map<LocalDate, AssetPairPrice> getAssetPairPriceList() {
         return assetPairPriceList;
     }
-    public void setAssetPairPriceList(List<AssetPairPrice> assetPairPriceList) {
+    
+    public void setAssetPairPriceList(Map<LocalDate, AssetPairPrice> assetPairPriceList) {
         this.assetPairPriceList = assetPairPriceList;
     }
+    
     public AssetPair getAssetPair() {
         return assetPair;
     }
+    
     public void setAssetPair(AssetPair assetPair) {
         this.assetPair = assetPair;
     }
