@@ -27,7 +27,7 @@ public class AssetPairPricesLoader {
 
             case BTCUSD:
                 return load(AssetPair.BTCUSD, "src/main/resources/BCHARTS-KRAKENUSD.csv");
-
+                
             case ETHBTC:
                 return load(AssetPair.ETHBTC, "src/main/resources/BITFINEX-ETHBTC.csv");
 
@@ -52,6 +52,7 @@ public class AssetPairPricesLoader {
                 for (CSVRecord csvRecord : csvParser) {
                     if (i > 0) {
                         AssetPairPrice app = new AssetPairPrice();
+
                         app.setAssetPair(assetPair);
 //                        app.setDate(LocalDate.parse(csvRecord.get("Date"));
 //                        app.setAssetPair(assetPair);
@@ -82,6 +83,7 @@ public class AssetPairPricesLoader {
                             app.setBid(csvRecord.get(5)); // 5
                             app.setAsk(csvRecord.get(6));
                         }
+
                         assetPairPrices.put(app.getDate(), app);
                     }
                     i ++;
