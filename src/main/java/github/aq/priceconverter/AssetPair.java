@@ -1,5 +1,5 @@
 package github.aq.priceconverter;
 
 public enum AssetPair {
-    ETHUSD, BTCUSD;
+    ETHUSD, ETHEUR, ETHBTC, BTCUSD, EURUSD;
 }
