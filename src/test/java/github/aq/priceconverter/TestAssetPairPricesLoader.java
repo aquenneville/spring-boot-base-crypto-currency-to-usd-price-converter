@@ -3,14 +3,16 @@ package github.aq.priceconverter;
 import static org.junit.Assert.assertTrue;
 
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.Map;
 
 import org.junit.Before;
 import org.junit.Test;
 
-import java.io.IOException;
-import java.util.List;
+import github.aq.priceconverter.model.AssetPair;
+import github.aq.priceconverter.model.AssetPairPrice;
+import github.aq.priceconverter.service.AssetPairPricesLoader;
 
 public class TestAssetPairPricesLoader {
 
@@ -34,10 +36,10 @@ public class TestAssetPairPricesLoader {
         AssetPairPricesLoader loader = new AssetPairPricesLoader();
         try {
             Map<LocalDate, AssetPairPrice> map = loader.load(AssetPair.ETHUSD);
-            assertTrue(map.size() >0);
-            System.out.println("test");
-            AssetPairPrice app = (AssetPairPrice) map.get(0);
+            assertTrue(map.size() > 0);
+            AssetPairPrice app = (AssetPairPrice) map.get(LocalDate.parse("2018-01-01"));
             System.out.println(app.getDate() + " " + app.getLast());
+            assertTrue(app.getLast().equals("736.77"));
         } catch(IOException exc) {
             System.out.println(exc.getMessage());
         }
