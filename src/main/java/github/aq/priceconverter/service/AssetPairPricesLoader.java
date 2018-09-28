@@ -1,4 +1,4 @@
-package github.aq.priceconverter;
+package github.aq.priceconverter.service;
 
 import java.io.IOException;
 import java.io.Reader;
@@ -11,6 +11,9 @@ import java.util.Map;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVRecord;
+
+import github.aq.priceconverter.model.AssetPair;
+import github.aq.priceconverter.model.AssetPairPrice;
 
 public class AssetPairPricesLoader {
 

@@ -1,4 +1,4 @@
-package github.aq.priceconverter;
+package github.aq.priceconverter.controller;
 
 import java.io.IOException;
 import java.math.BigDecimal;
@@ -12,6 +12,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
+
+import github.aq.priceconverter.model.AssetPair;
+import github.aq.priceconverter.model.AssetPairPrice;
+import github.aq.priceconverter.model.HistoricalAssetPairPriceList;
+import github.aq.priceconverter.model.Order;
+import github.aq.priceconverter.service.AssetPairPricesLoader;
+import github.aq.priceconverter.service.PriceToUsdExchange;
 
 @RestController
 @RequestMapping("/api/v1/price")

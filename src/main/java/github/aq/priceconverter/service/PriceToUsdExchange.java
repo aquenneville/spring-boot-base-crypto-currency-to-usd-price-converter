@@ -1,8 +1,13 @@
-package github.aq.priceconverter;
+package github.aq.priceconverter.service;
 
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.Map;
+
+import github.aq.priceconverter.model.AssetPair;
+import github.aq.priceconverter.model.AssetPairPrice;
+import github.aq.priceconverter.model.Order;
+
 import java.util.HashMap;
 import java.time.LocalDate;
 

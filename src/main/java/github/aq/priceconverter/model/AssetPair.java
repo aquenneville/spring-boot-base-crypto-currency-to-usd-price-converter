@@ -1,4 +1,4 @@
-package github.aq.priceconverter;
+package github.aq.priceconverter.model;
 
 public enum AssetPair {
     ETHUSD, ETHEUR, ETHBTC, BTCUSD, EURUSD;
