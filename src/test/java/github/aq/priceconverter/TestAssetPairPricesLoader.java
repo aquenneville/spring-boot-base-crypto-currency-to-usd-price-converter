@@ -3,7 +3,6 @@ package github.aq.priceconverter;
 import static org.junit.Assert.assertTrue;
 
 import java.io.IOException;
-import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.Map;
 
