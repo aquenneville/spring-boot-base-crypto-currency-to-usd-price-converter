@@ -76,7 +76,7 @@ public class PriceConverterController {
     			// in the case the asset pair does not end with USD 
     			if (!assetPairName.toUpperCase().endsWith("USD")) {
     			    Order usdOrder = new PriceToUsdExchange(assetPair).convertPriceToUsd(LocalDate.parse(date), order.getValue());
-    				order.setOrder(usdOrder);
+    			    order.setOrder(usdOrder);
     			}
     
     		} else {
