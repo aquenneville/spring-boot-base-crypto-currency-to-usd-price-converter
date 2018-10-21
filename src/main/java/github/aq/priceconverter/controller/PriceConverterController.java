@@ -3,9 +3,8 @@ package github.aq.priceconverter.controller;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.util.HashMap;
-import java.util.Map;
 
+import github.aq.priceconverter.model.*;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,49 +12,79 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import github.aq.priceconverter.model.AssetPair;
-import github.aq.priceconverter.model.AssetPairPrice;
-import github.aq.priceconverter.model.HistoricalAssetPairPriceList;
-import github.aq.priceconverter.model.Order;
-import github.aq.priceconverter.service.AssetPairPricesLoader;
 import github.aq.priceconverter.service.PriceToUsdExchange;
 
 @RestController
-@RequestMapping("/api/v1/price")
+@RequestMapping("/api/v1/")
 public class PriceConverterController {
 
-	Map<AssetPair, HistoricalAssetPairPriceList> historicalPrices;
+	//Map<AssetPair, HistoricalAssetPairPriceList> historicalPrices;
+	HistoricalAssetPairPriceDictionary dictionary;
 	
-	@RequestMapping(path="/{assetPairName}/{amount}/{date}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-	public @ResponseBody Order convertEthAmountToUsdPrice(@PathVariable String assetPairName, @PathVariable BigDecimal amount, @PathVariable String date) throws IOException {
+	@RequestMapping(path="/altcoin/{assetPairName}/{price}/{amount}/{date}/value", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public @ResponseBody Order convertAssetAmountToUsdValue(@PathVariable String assetPairName, @PathVariable BigDecimal price,
+            @PathVariable BigDecimal amount, @PathVariable String date) throws IOException {
+	    AssetPairPrice assetPairPrice = null;
+        Order order = null;
+        AssetPair assetPair = AssetPair.valueOf(assetPairName.toUpperCase());
+        if (assetPairName.toUpperCase().endsWith("BTC") || assetPairName.toUpperCase().endsWith("ETH")) {
+            if (dictionary == null) {
+				dictionary = new HistoricalAssetPairPriceDictionary();
+            }
+            dictionary.addHistoricalBaseAssetPairPrices(assetPair);
+
+			if (dictionary.hasAssetPairAndPrice(assetPair, date)) {
+                order = new Order();
+                assetPairPrice = new AssetPairPrice();
+                assetPairPrice.setLast(price.toString());
+                assetPairPrice.setAssetPair(assetPair);
+                order.setApp(assetPairPrice);
+                order.setAmount(amount);
+                
+                // in the case the asset pair does not end with USD 
+                if (!assetPairName.toUpperCase().endsWith("USD")) {
+                	//AssetPair baseAssetPair = dictionary.getBaseAssetPair(assetPair);
+                    Order usdOrder = new PriceToUsdExchange(assetPair).convertPriceToUsd(LocalDate.parse(date), order.getValue());
+                    order.setOrder(usdOrder);
+                }
+    
+            } else {
+                throw new IllegalStateException("The price does not exist for this date");
+            }
+        } else {
+            throw new IllegalStateException("The asset pair needs to end with BTC or start with ETH.");
+        }
+        return order;
+	}
+	
+	@RequestMapping(path="/{assetPairName}/{amount}/{date}/value", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	public @ResponseBody Order convertAssetAmountToUsdValue(@PathVariable String assetPairName, @PathVariable BigDecimal amount, @PathVariable String date) throws IOException {
 		AssetPairPrice app = null;
 		Order order = null;
-		if (historicalPrices == null) {
-			historicalPrices = new HashMap<>();
-		}
-		
 		AssetPair assetPair = AssetPair.valueOf(assetPairName.toUpperCase());
-		if (!historicalPrices.containsKey(assetPair)) {
-			AssetPairPricesLoader appl = new AssetPairPricesLoader();
-			Map<LocalDate, AssetPairPrice> historicalAssetPrices = appl.load(assetPair);
-			HistoricalAssetPairPriceList historicalAssetPriceList = new HistoricalAssetPairPriceList();
-			historicalAssetPriceList.setAssetPairPriceList(historicalAssetPrices);
-			historicalAssetPriceList.setAssetPair(assetPair);
-			historicalPrices.put(assetPair, historicalAssetPriceList);
-			
-		}
-		if (historicalPrices.get(assetPair).getAssetPairPriceList().containsKey(LocalDate.parse(date))) {
-			app = historicalPrices.get(assetPair).getAssetPairPriceList().get(LocalDate.parse(date));
-			order = new Order();
-			order.setApp(app);
-			order.setAmount(amount);
-			if (!assetPairName.toUpperCase().endsWith("USD")) {
-				Order usdOrder = new PriceToUsdExchange(assetPair).convertPriceToUsd(LocalDate.parse(date), order.getValue());
-				order.setOrder(usdOrder);
-			}
+		if (assetPairName.toUpperCase().endsWith("BTC") || assetPairName.toUpperCase().startsWith("ETH")) {
+    		if (dictionary == null) {
+    			dictionary = new HistoricalAssetPairPriceDictionary();
+    		}
 
+    		dictionary.addHistoricalBaseAssetPairPrices(assetPair);
+
+			if (dictionary.hasAssetPairAndPrice(assetPair, date)) {
+    			app = dictionary.getAssetPairPrice(assetPair, date);
+    			order = new Order();
+    			order.setApp(app);
+    			order.setAmount(amount);
+    			// in the case the asset pair does not end with USD 
+    			if (!assetPairName.toUpperCase().endsWith("USD")) {
+    				Order usdOrder = new PriceToUsdExchange(assetPair).convertPriceToUsd(LocalDate.parse(date), order.getValue());
+    				order.setOrder(usdOrder);
+    			}
+    
+    		} else {
+    			throw new IllegalStateException("The price does not exist for this date");
+    		}
 		} else {
-			throw new IllegalStateException("The price does not exist for this date");
+		    throw new IllegalStateException("The asset pair needs to end with BTC or start with ETH.");
 		}
 		return order;
 	}
