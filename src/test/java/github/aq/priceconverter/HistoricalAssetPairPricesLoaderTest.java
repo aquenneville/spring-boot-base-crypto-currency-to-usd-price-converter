@@ -13,7 +13,7 @@ import github.aq.priceconverter.model.AssetPair;
 import github.aq.priceconverter.model.AssetPairPrice;
 import github.aq.priceconverter.service.AssetPairPricesLoader;
 
-public class TestAssetPairPricesLoader {
+public class HistoricalAssetPairPricesLoaderTest {
 
     @Before
     public void setUp() throws Exception {
