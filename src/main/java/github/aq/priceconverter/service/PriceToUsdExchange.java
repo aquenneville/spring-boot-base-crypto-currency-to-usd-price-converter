@@ -23,6 +23,9 @@ public class PriceToUsdExchange {
         assetPairPaths.put(AssetPair.ETHBTC, AssetPair.BTCUSD);
         assetPairPaths.put(AssetPair.ETHEUR, AssetPair.EURUSD);
         assetPairPaths.put(AssetPair.XVGETH, AssetPair.ETHUSD);
+        assetPairPaths.put(AssetPair.ETCETH, AssetPair.ETHUSD);
+        assetPairPaths.put(AssetPair.TRONETH, AssetPair.ETHUSD);
+        assetPairPaths.put(AssetPair.NEOETH, AssetPair.ETHUSD);
     }
 
     public Order convertPriceToUsd(LocalDate date, BigDecimal amount) throws IOException {
