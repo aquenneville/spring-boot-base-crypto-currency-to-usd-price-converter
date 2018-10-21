@@ -29,7 +29,7 @@ public class PriceConverterController {
         AssetPair assetPair = AssetPair.valueOf(assetPairName.toUpperCase());
         if (assetPairName.toUpperCase().endsWith("BTC") || assetPairName.toUpperCase().endsWith("ETH")) {
             if (dictionary == null) {
-				dictionary = new HistoricalAssetPairPriceDictionary();
+                dictionary = new HistoricalAssetPairPriceDictionary();
             }
             dictionary.addHistoricalBaseAssetPairPrices(assetPair);
 
@@ -63,7 +63,7 @@ public class PriceConverterController {
 		AssetPair assetPair = AssetPair.valueOf(assetPairName.toUpperCase());
 		if (assetPairName.toUpperCase().endsWith("BTC") || assetPairName.toUpperCase().startsWith("ETH")) {
     		if (dictionary == null) {
-    			dictionary = new HistoricalAssetPairPriceDictionary();
+    		    dictionary = new HistoricalAssetPairPriceDictionary();
     		}
 
     		dictionary.addHistoricalBaseAssetPairPrices(assetPair);
@@ -75,7 +75,7 @@ public class PriceConverterController {
     			order.setAmount(amount);
     			// in the case the asset pair does not end with USD 
     			if (!assetPairName.toUpperCase().endsWith("USD")) {
-    				Order usdOrder = new PriceToUsdExchange(assetPair).convertPriceToUsd(LocalDate.parse(date), order.getValue());
+    			    Order usdOrder = new PriceToUsdExchange(assetPair).convertPriceToUsd(LocalDate.parse(date), order.getValue());
     				order.setOrder(usdOrder);
     			}
     
