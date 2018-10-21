@@ -22,13 +22,14 @@ public class PriceToUsdExchange {
         assetPairPaths = new HashMap<>();
         assetPairPaths.put(AssetPair.ETHBTC, AssetPair.BTCUSD);
         assetPairPaths.put(AssetPair.ETHEUR, AssetPair.EURUSD);
+        assetPairPaths.put(AssetPair.XVGETH, AssetPair.ETHUSD);
     }
 
     public Order convertPriceToUsd(LocalDate date, BigDecimal amount) throws IOException {
 
         AssetPair assetPairExchange = assetPairPaths.get(initialAssetPair);
-        AssetPairPricesLoader appl = new AssetPairPricesLoader();
-        Map<LocalDate, AssetPairPrice> historicalAssetPrices = appl.load(assetPairExchange);
+        AssetPairPricesLoader loader = new AssetPairPricesLoader();
+        Map<LocalDate, AssetPairPrice> historicalAssetPrices = loader.load(assetPairExchange);
         if (historicalAssetPrices.containsKey(LocalDate.parse(date.toString()))) {
             AssetPairPrice app = historicalAssetPrices.get(date);
             Order order = new Order();
