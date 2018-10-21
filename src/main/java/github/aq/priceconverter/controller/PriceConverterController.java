@@ -33,7 +33,7 @@ public class PriceConverterController {
             }
             dictionary.addHistoricalBaseAssetPairPrices(assetPair);
 
-			if (dictionary.hasAssetPairAndPrice(assetPair, date)) {
+            if (dictionary.hasAssetPairAndPrice(assetPair, date)) {
                 order = new Order();
                 assetPairPrice = new AssetPairPrice();
                 assetPairPrice.setLast(price.toString());
