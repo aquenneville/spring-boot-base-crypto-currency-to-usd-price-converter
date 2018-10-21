@@ -57,23 +57,12 @@ public class AssetPairPricesLoader {
                         AssetPairPrice app = new AssetPairPrice();
 
                         app.setAssetPair(assetPair);
-//                        app.setDate(LocalDate.parse(csvRecord.get("Date"));
-//                        app.setAssetPair(assetPair);
-//                        app.setBid(csvRecord.get("Bid"));
-//                        app.setAsk(csvRecord.get("Ask"));
-//                        app.setHigh(csvRecord.get("High"));
-//                        app.setLow(csvRecord.get("Low"));
-//                        app.setMid(csvRecord.get("Mid"));
-//                        app.setLast(csvRecord.get("Last"));
                         if (filename.contains("GDAX-ETH_EUR.csv")) { // starts GDAX
 
                             app.setDate(LocalDate.parse(csvRecord.get(0)));
                             app.setLast(csvRecord.get(1));
-                            //app.setAsk(csvRecord.get(2));
                             app.setHigh(csvRecord.get(2));
                             app.setLow(csvRecord.get(3));
-                            //app.setMid(csvRecord.get(4));
-                            //app.setLast(csvRecord.get(5));
                         } else if (filename.contains("ECB-EURUSD.csv")) { // starts with ECB
                             app.setDate(LocalDate.parse(csvRecord.get(0)));
                             app.setLast(csvRecord.get(1));
