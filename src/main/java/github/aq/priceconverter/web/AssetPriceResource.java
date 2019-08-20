@@ -1,4 +1,4 @@
-package github.aq.priceconverter.controller;
+package github.aq.priceconverter.web;
 
 import java.io.IOException;
 import java.math.BigDecimal;
@@ -16,7 +16,7 @@ import github.aq.priceconverter.service.PriceToUsdExchange;
 
 @RestController
 @RequestMapping("/api/v1/")
-public class PriceConverterController {
+public class PriceResource {
 
 	//Map<AssetPair, HistoricalAssetPairPriceList> historicalPrices;
 	private HistoricalAssetPairPriceDictionary dictionary;
